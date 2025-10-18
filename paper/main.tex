@@ -124,13 +124,23 @@ curvature (sensitivity of Delta) for short maturities.}
 
 \FloatBarrier % <-- Ensures all figures stay before next section
 
-% ---------- Discussion / Future Work ----------
 \section{Discussion and Future Work}
-Under Black--Scholes, a single constant $\sigma$ must reconcile prices across strikes and maturities. Empirically, equity index options
-exhibit strike--dependent implied volatilities (smile/smirk) and nontrivial term structure, producing systematic deviations when a
-constant--volatility model is imposed. These findings motivate richer dynamics such as local volatility or stochastic volatility.
-Future work will implement the Heston model, calibrate via characteristic functions/Fourier pricing, and compare fit and stability to
-the Black--Scholes baseline on the same SPX chains.
+
+\subsection{Interpretation of Results}
+The empirical results highlight systematic discrepancies between market prices and the Black--Scholes baseline, particularly across strikes surrounding the at--the--money region. These deviations are consistent with the well-documented \emph{volatility smile} and \emph{skew} phenomena, where implied volatilities vary by strike rather than remaining constant. In practice, out-of-the-money options often carry higher implied volatilities due to demand for tail-risk protection, while at-the-money options generally reflect more balanced beliefs about short-term uncertainty.
+
+The presence of persistent pricing errors indicates that the constant-volatility assumption of Black--Scholes cannot fully capture market dynamics. Although the model serves as an analytically elegant starting point, its single-parameter volatility framework leads to underestimation or overestimation of option values depending on moneyness. This reinforces the need for richer stochastic models capable of representing time-varying and state-dependent volatility structures.
+
+\subsection{Future Work: Heston Model}
+Future research will extend this analysis using stochastic volatility models such as the Heston framework, in which variance evolves as a mean-reverting process:
+\begin{equation}
+\begin{aligned}
+dS_t &= \mu S_t\,dt + \sqrt{v_t}\, S_t\, dW_t^S, \\
+dv_t &= \kappa(\theta - v_t)\,dt + \xi \sqrt{v_t}\, dW_t^v,
+\end{aligned}
+\end{equation}
+where $v_t$ denotes instantaneous variance, $\kappa$ is the rate of mean reversion, $\theta$ the long-run variance, and $\xi$ the volatility of variance. By allowing the volatility to evolve stochastically, the Heston model provides a more flexible framework to capture empirical features such as smile, skew, and term structure. Calibration and comparison against SPX market data will form the basis of future empirical work.
+
 
 % ---------- Conclusion ----------
 \section{Conclusion}
