@@ -16,3 +16,11 @@ Aspiring Financial Mathematics PhD | Computational Finance Research
 - SPX call pricing error vs strike (plot)
 - Delta/Gamma/Vega curves around ATM
 Figures are generated from `notebooks/01_black_scholes.ipynb`.
+
+## Paper Figures
+- `paper/figures/pricing_error_vs_strike.png`  
+- `paper/figures/delta_vs_strike.png`  
+- `paper/figures/gamma_vs_strike.png`
+
+Reproducible via `notebooks/01_black_scholes.ipynb`. Figures are embedded in `paper/main.tex`.
+
