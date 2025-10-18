@@ -2,6 +2,13 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath, amssymb}
 \usepackage{graphicx}
+\newcommand{\fig}[3]{%
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/#1}
+\caption{#2}
+\label{fig:#3}
+\end{figure}}
 \usepackage{hyperref}
 \usepackage{setspace}
 \onehalfspacing
