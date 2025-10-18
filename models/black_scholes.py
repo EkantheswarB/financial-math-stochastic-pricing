@@ -7,14 +7,13 @@ def _d1_d2(S, K, T, r, sigma):
     return d1, d2
 
 def black_scholes_price(S, K, T, r, sigma, option_type='call'):
-     """
-    S: Spot Price
-    K: Strike Price
-    T: Time to Maturity (in years)
-    r: Risk-free rate
-    sigma: Volatility
-    option_type: 'call' or 'put'
-    """
+    # """S: Spot Price
+    # K: Strike Price
+    # T: Time to Maturity (in years)
+    # r: Risk-free rate
+    # sigma: Volatility
+    # option_type: 'call' or 'put'
+    # """
     d1, d2 = _d1_d2(S, K, T, r, sigma)
     if option_type == 'call':
         return S*norm.cdf(d1) - K*np.exp(-r*T)*norm.cdf(d2)
