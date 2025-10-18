@@ -80,6 +80,9 @@ We also report illustrative Greek curves around ATM using the same maturity and 
 
 These diagnostics validate the computational pipeline and highlight model limitations that motivate richer dynamics (e.g., stochastic volatility).
 
+\paragraph{Discussion.}
+Under Black--Scholes, a single constant $\sigma$ must reconcile prices across strikes and maturities. Empirically, equity index options exhibit strike--dependent implied volatilities (smile/smirk) and maturity structures (term structure), producing systematic mispricing when the constant--volatility assumption is imposed. These findings motivate extensions such as local volatility or stochastic volatility. In forthcoming work we will implement Heston dynamics and compare fit and stability to the Black--Scholes baseline.
+
 
 \section{Conclusion}
 Black--Scholes provides a transparent baseline and a reproducible pipeline from data to price and sensitivities.
