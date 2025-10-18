@@ -1,47 +1,68 @@
 \documentclass[12pt]{article}
+
+% ---------- Packages ----------
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath, amssymb}
 \usepackage{graphicx}
-\newcommand{\fig}[3]{%
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.85\linewidth]{figures/#1}
-\caption{#2}
-\label{fig:#3}
-\end{figure}}
-\usepackage{hyperref}
+\usepackage{float}        % [H] exact figure placement
+\usepackage{placeins}     % \FloatBarrier to stop floats crossing sections
 \usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{caption}      % \captionof if ever needed
+\usepackage{booktabs}
+
 \onehalfspacing
 
+% Make LaTeX look for images in ./figures relative to this file
+\graphicspath{{figures/}}
+
+% ---------- Metadata ----------
 \title{\textbf{A Computational Study of Derivative Pricing under Stochastic Volatility Using the Black--Scholes Framework}}
 \author{\textbf{Ekantheswar Bandarupalli}\\
 \small Working Paper --- Computational Finance Research\\
 \small \texttt{study.ekantheswar@gmail.com}}
 \date{\today}
 
+% ---------- PDF meta ----------
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  pdftitle={A Computational Study of Derivative Pricing under Stochastic Volatility Using the Black--Scholes Framework},
+  pdfauthor={Ekantheswar Bandarupalli}
+}
+
 \begin{document}
 \maketitle
 \thispagestyle{empty}
-\vspace{1em}
-\noindent\textbf{Abstract. }
+
+% ---------- Abstract ----------
+\begin{abstract}
 The intersection of financial markets and mathematical modeling has long fascinated both practitioners and academics.
 While algorithmic trading first sparked my interest in finance, it was the underlying question of how risk and price evolve
-that drew me toward stochastic calculus and derivative pricing. This study presents a computational approach to pricing European options
-using the Black--Scholes model and compares theoretical values with real S\&P 500 (SPX) market data. We highlight model fit, limitations,
-and directions toward stochastic volatility models.
+that drew me toward stochastic calculus and derivative pricing. This study presents a reproducible computational baseline for
+pricing European options using the Black--Scholes model and compares theoretical values with real S\&P 500 (SPX) market data.
+We highlight model fit, limitations arising from the constant volatility assumption, and outline directions toward stochastic
+volatility models such as Heston.
+\end{abstract}
 
 \newpage
 \setcounter{page}{1}
+
+% ---------- Introduction ----------
 \section{Introduction}
 My initial interest in financial markets began through trading, where market behavior seemed both systematic and unpredictable.
-What began as an exploration of trading strategies evolved into a deeper curiosity about the mathematics governing price movements,
-volatility, and risk. I soon realized that true insight lies not in execution alone, but in the stochastic models that shape financial dynamics.
-The objective of this work is to bridge theoretical finance with computational implementation.
+What began as an exploration of trading systems evolved into a deeper curiosity about the mathematics governing price movements,
+volatility, and risk. I soon realized that true insight lies not in execution alone, but in the stochastic models that shape
+financial dynamics. The objective of this work is to bridge theoretical finance with computational implementation.
 By applying the Black--Scholes model to real SPX option data, this paper evaluates accuracy, limitations, and potential extensions
-toward stochastic volatility (e.g., Heston).
+toward stochastic volatility.
 
+% ---------- Methodology ----------
 \section{Methodology}
-We consider the standard Black--Scholes setting with underlying price $(S_t)_{t\ge 0}$ following geometric Brownian motion under the risk--neutral measure:
+We consider the standard Black--Scholes setting with underlying price $(S_t)_{t\ge 0}$ following geometric Brownian motion under the
+risk--neutral measure:
 \begin{equation}
 dS_t = r S_t\,dt + \sigma S_t\, dW_t,
 \end{equation}
@@ -59,35 +80,65 @@ where $\Phi$ denotes the standard normal CDF.
 
 We compute the \emph{Greeks} to assess sensitivities: Delta ($\partial C/\partial S$), Gamma ($\partial^2 C/\partial S^2$),
 Vega ($\partial C/\partial \sigma$), Theta ($\partial C/\partial T$), and Rho ($\partial C/\partial r$), using closed--form expressions.
-Empirically, we retrieve SPX option chains via public data and form the time--to--maturity $T$ and strike grids around the at--the--money region.
-We compare market mid quotes with the Black--Scholes price computed using market implied volatilities and report pricing errors by strike.
+Empirically, we retrieve SPX option chains via public market data, construct time--to--maturity $T$ and strike grids near the
+at--the--money (ATM) region, and compare market mid quotes with Black--Scholes prices computed using market implied volatilities.
+Pricing errors are reported as (market price $-$ model price).
 
-\paragraph{Limitations.} The constant volatility assumption leads to systematic mispricing patterns (e.g., volatility smile/smirk).
-In subsequent work we outline a stochastic volatility extension (Heston) where $d\nu_t = \kappa(\theta-\nu_t)dt + \xi \sqrt{\nu_t}\, dZ_t$
-and price via Fourier methods or simulation.
+\paragraph{Limitations.}
+The constant volatility assumption induces systematic mispricing patterns (e.g., volatility smile/smirk). In subsequent work we outline
+a stochastic volatility extension (Heston) with variance process
+$d\nu_t = \kappa(\theta-\nu_t)\,dt + \xi \sqrt{\nu_t}\, dZ_t$ and price via Fourier methods or simulation.
 
+% ---------- Results ----------
 \section{Results}
-We analyze the nearest--maturity SPX option chain and compare market mid prices with Black--Scholes values computed using market implied volatilities. Figure~\ref{fig:pricing-error} shows the pricing error (market price minus Black--Scholes price) across strikes near the at--the--money (ATM) region.
+We analyze the nearest--maturity SPX option chain and compare market mid prices with Black--Scholes values computed using market
+implied volatilities. Figure~\ref{fig:pricing-error} shows the pricing error across strikes near the ATM region.
+We also report illustrative Greek curves (Delta and Gamma) around ATM using a representative maturity and IV.
 
-\fig{pricing_error_vs_strike.png}{Market vs.\ Black--Scholes mispricing by strike for SPX calls near the ATM region and nearest expiry. Positive values indicate the market is priced above the baseline model.}{pricing-error}
+% --- Figure 1: Pricing Error ---
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{pricing_error_vs_strike.png}
+\caption{Market vs.\ Black--Scholes mispricing by strike for SPX calls near the ATM region and nearest expiry.
+Positive values indicate the market is priced above the baseline model.}
+\label{fig:pricing-error}
+\end{figure}
 
-The error profile displays systematic curvature across strikes, consistent with well--known \emph{volatility smile/smirk} effects that violate the constant--volatility assumption. In particular, far OTM/ITM regions tend to exhibit larger absolute deviations, while ATM errors compress as maturity approaches.\footnote{Exact patterns depend on the date, maturity, and liquidity of the option chain; figures are regenerated programmatically from the accompanying notebook.}
+% --- Figure 2: Delta ---
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{delta_vs_strike.png}
+\caption{Delta as a function of strike (nearest maturity, representative IV). The transition around ATM reflects
+the probability mass under the risk--neutral distribution.}
+\label{fig:delta}
+\end{figure}
 
-We also report illustrative Greek curves around ATM using the same maturity and an IV representative of the observed chain (median IV). Delta transitions sharply through $0.5$ at ATM, while Gamma peaks near ATM, reflecting higher sensitivity of Delta to price changes:
+% --- Figure 3: Gamma ---
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{gamma_vs_strike.png}
+\caption{Gamma as a function of strike (nearest maturity, representative IV). The peak at ATM indicates heightened
+curvature (sensitivity of Delta) for short maturities.}
+\label{fig:gamma}
+\end{figure}
 
-\fig{delta_vs_strike.png}{Delta as a function of strike (nearest maturity, representative IV). The transition around ATM reflects the probability mass under the risk--neutral distribution.}{delta}
-\fig{gamma_vs_strike.png}{Gamma as a function of strike (nearest maturity, representative IV). The peak at ATM indicates heightened curvature (sensitivity of Delta) for short maturities.}{gamma}
+\FloatBarrier % <-- Ensures all figures stay before next section
 
-These diagnostics validate the computational pipeline and highlight model limitations that motivate richer dynamics (e.g., stochastic volatility).
+% ---------- Discussion / Future Work ----------
+\section{Discussion and Future Work}
+Under Black--Scholes, a single constant $\sigma$ must reconcile prices across strikes and maturities. Empirically, equity index options
+exhibit strike--dependent implied volatilities (smile/smirk) and nontrivial term structure, producing systematic deviations when a
+constant--volatility model is imposed. These findings motivate richer dynamics such as local volatility or stochastic volatility.
+Future work will implement the Heston model, calibrate via characteristic functions/Fourier pricing, and compare fit and stability to
+the Black--Scholes baseline on the same SPX chains.
 
-\paragraph{Discussion.}
-Under Black--Scholes, a single constant $\sigma$ must reconcile prices across strikes and maturities. Empirically, equity index options exhibit strike--dependent implied volatilities (smile/smirk) and maturity structures (term structure), producing systematic mispricing when the constant--volatility assumption is imposed. These findings motivate extensions such as local volatility or stochastic volatility. In forthcoming work we will implement Heston dynamics and compare fit and stability to the Black--Scholes baseline.
-
-
+% ---------- Conclusion ----------
 \section{Conclusion}
 Black--Scholes provides a transparent baseline and a reproducible pipeline from data to price and sensitivities.
 Observed deviations highlight the need for richer dynamics; future work will implement and compare a Heston specification.
 
+% ---------- References ----------
 \bibliographystyle{plain}
 \bibliography{references}
+
 \end{document}
