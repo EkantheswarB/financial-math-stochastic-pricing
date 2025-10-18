@@ -67,8 +67,19 @@ In subsequent work we outline a stochastic volatility extension (Heston) where $
 and price via Fourier methods or simulation.
 
 \section{Results}
-We report (i) price deviations by strike near ATM, and (ii) example Greek curves (Delta, Gamma, Vega) for short maturities.
-Figures are produced directly from the accompanying Python notebook.
+We analyze the nearest--maturity SPX option chain and compare market mid prices with Black--Scholes values computed using market implied volatilities. Figure~\ref{fig:pricing-error} shows the pricing error (market price minus Black--Scholes price) across strikes near the at--the--money (ATM) region.
+
+\fig{pricing_error_vs_strike.png}{Market vs.\ Black--Scholes mispricing by strike for SPX calls near the ATM region and nearest expiry. Positive values indicate the market is priced above the baseline model.}{pricing-error}
+
+The error profile displays systematic curvature across strikes, consistent with well--known \emph{volatility smile/smirk} effects that violate the constant--volatility assumption. In particular, far OTM/ITM regions tend to exhibit larger absolute deviations, while ATM errors compress as maturity approaches.\footnote{Exact patterns depend on the date, maturity, and liquidity of the option chain; figures are regenerated programmatically from the accompanying notebook.}
+
+We also report illustrative Greek curves around ATM using the same maturity and an IV representative of the observed chain (median IV). Delta transitions sharply through $0.5$ at ATM, while Gamma peaks near ATM, reflecting higher sensitivity of Delta to price changes:
+
+\fig{delta_vs_strike.png}{Delta as a function of strike (nearest maturity, representative IV). The transition around ATM reflects the probability mass under the risk--neutral distribution.}{delta}
+\fig{gamma_vs_strike.png}{Gamma as a function of strike (nearest maturity, representative IV). The peak at ATM indicates heightened curvature (sensitivity of Delta) for short maturities.}{gamma}
+
+These diagnostics validate the computational pipeline and highlight model limitations that motivate richer dynamics (e.g., stochastic volatility).
+
 
 \section{Conclusion}
 Black--Scholes provides a transparent baseline and a reproducible pipeline from data to price and sensitivities.
