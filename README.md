@@ -17,6 +17,10 @@ Aspiring Financial Mathematics PhD | Computational Finance Research
 - Delta/Gamma/Vega curves around ATM
 Figures are generated from `notebooks/01_black_scholes.ipynb`.
 
+📄 Research Paper (Working Draft):
+[Download PDF](paper/working_paper_bandarupalli_2025.pdf)
+
+
 ## Paper Figures
 - `paper/figures/pricing_error_vs_strike.png`  
 - `paper/figures/delta_vs_strike.png`  
