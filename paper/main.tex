@@ -35,6 +35,7 @@
 
 \begin{document}
 \maketitle
+
 \thispagestyle{empty}
 
 % ---------- Abstract ----------
@@ -64,8 +65,8 @@ toward stochastic volatility.
 
 % ---------- Methodology ----------
 \section{Methodology}
-We consider the standard Black--Scholes setting with underlying price $(S_t)_{t\ge 0}$ following geometric Brownian motion under the
-risk--neutral measure:
+The Black--Scholes model, first introduced by Black and Scholes~\cite{black1973pricing}, provides a closed-form framework for pricing European options under assumptions of constant volatility and lognormal asset dynamics. We consider the standard Black--Scholes setting with underlying price $(S_t)_{t\ge 0}$ following geometric Brownian motion under the
+risk--neutral measure. Under the risk-neutral framework described in~\cite{black1973pricing}, the asset price $S_t$ is modeled as geometric Brownian motion, leading to closed-form pricing expressions and analytical sensitivities via the Greeks.
 \begin{equation}
 dS_t = r S_t\,dt + \sigma S_t\, dW_t,
 \end{equation}
@@ -127,6 +128,8 @@ curvature (sensitivity of Delta) for short maturities.}
 
 \FloatBarrier % <-- Ensures all figures stay before next section
 
+% ---------- Discussion and Future Work ----------
+
 \section{Discussion and Future Work}
 
 \subsection{Interpretation of Results}
@@ -134,8 +137,11 @@ The empirical results highlight systematic discrepancies between market prices a
 
 The presence of persistent pricing errors indicates that the constant-volatility assumption of Black--Scholes cannot fully capture market dynamics. Although the model serves as an analytically elegant starting point, its single-parameter volatility framework leads to underestimation or overestimation of option values depending on moneyness. This reinforces the need for richer stochastic models capable of representing time-varying and state-dependent volatility structures.
 
+% ---------- Future Work ----------
+
 \subsection{Future Work: Heston Model}
-Future research will extend this analysis using stochastic volatility models such as the Heston framework, in which variance evolves as a mean-reverting process:
+Future research will extend this analysis using stochastic volatility models. A prominent stochastic volatility framework is the Heston model~\cite{heston1993closed}, in which the variance follows a mean-reverting square-root process correlated with the asset price.
+:
 \begin{equation}
 \begin{aligned}
 dS_t &= \mu S_t\,dt + \sqrt{v_t}\, S_t\, dW_t^S, \\
@@ -145,18 +151,24 @@ dv_t &= \kappa(\theta - v_t)\,dt + \xi \sqrt{v_t}\, dW_t^v,
 where $v_t$ denotes instantaneous variance, $\kappa$ is the rate of mean reversion, $\theta$ the long-run variance, and $\xi$ the volatility of variance. By allowing the volatility to evolve stochastically, the Heston model provides a more flexible framework to capture empirical features such as smile, skew, and term structure. Calibration and comparison against SPX market data will form the basis of future empirical work.
 
 
-% ---------- Conclusion ----------
-\section{Conclusion}
-Black--Scholes provides a transparent baseline and a reproducible pipeline from data to price and sensitivities.
-Observed deviations highlight the need for richer dynamics; future work will implement and compare a Heston specification.
 
-%---------- Acknowledgment---------
+
+% ---------- Conclusion ----------
+
+\section{Conclusion}
+This study implemented the Black--Scholes framework and applied it to real SPX option data to evaluate theoretical pricing under constant volatility assumptions. The observed pricing discrepancies and systematic volatility patterns highlight the limitations of deterministic volatility models in capturing market behavior. By examining Greeks and pricing errors across strikes, we established a computational baseline from which more advanced stochastic volatility frameworks can evolve.
+
+Looking ahead, models such as Heston offer a mathematically richer foundation by allowing volatility itself to vary over time and state. Incorporating such dynamics represents a natural progression of this work and aligns with my broader goal of contributing to financial modeling that is both mathematically rigorous and practically relevant. Ultimately, I aim to bridge mathematical finance and quantitative innovation in industry, building tools and insights that serve both research and real-world applications.
+
+% ---------- Acknowledgment ----------
 \section*{Acknowledgment}
 This work is part of my independent research initiative in computational finance, conducted in preparation for doctoral studies in Financial Mathematics.
 
 
 % ---------- References ----------
+
 \bibliographystyle{plain}
 \bibliography{references}
+
 
 \end{document}
