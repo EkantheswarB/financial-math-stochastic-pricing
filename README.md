@@ -12,13 +12,14 @@ This repository explores the computational side of Financial Mathematics using d
 **Ekanteshwar Bandarupalli**
 Aspiring Financial Mathematics PhD | Computational Finance Research
 
+📄 Research Paper (Working Draft):
+[Download PDF](paper/working_paper_bandarupalli_2025.pdf)
+
 ## Results (Preview)
 - SPX call pricing error vs strike (plot)
 - Delta/Gamma/Vega curves around ATM
 Figures are generated from `notebooks/01_black_scholes.ipynb`.
 
-📄 Research Paper (Working Draft):
-[Download PDF](paper/working_paper_bandarupalli_2025.pdf)
 
 
 ## Paper Figures
