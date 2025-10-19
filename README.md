@@ -9,7 +9,7 @@ This repository explores the computational side of Financial Mathematics using d
 - Begin research paper for PhD submission (Dec 2024)
 
 ## Author
-**Ekanteshwar Bandarupalli**
+**Ekantheswar Bandarupalli**
 Aspiring Financial Mathematics PhD | Computational Finance Research
 
 📄 Research Paper (Working Draft):
