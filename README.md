@@ -20,12 +20,18 @@ Aspiring Financial Mathematics PhD | Computational Finance Research
 - Delta/Gamma/Vega curves around ATM
 Figures are generated from `notebooks/01_black_scholes.ipynb`.
 
-
-
 ## Paper Figures
 - `paper/figures/pricing_error_vs_strike.png`  
 - `paper/figures/delta_vs_strike.png`  
 - `paper/figures/gamma_vs_strike.png`
 
 Reproducible via `notebooks/01_black_scholes.ipynb`. Figures are embedded in `paper/main.tex`.
+
+### Ongoing Research: Stochastic Volatility (Heston)
+We analyze the implied volatility smile in S&P 500 (via SPY) and compare it with an illustrative Heston curve.
+
+![Market vs Heston Smile](paper/figures/heston_smile.png)
+
+For details, see the “Ongoing Research / Heston Model” section of the paper.
+
 
