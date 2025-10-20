@@ -40,13 +40,11 @@
 
 % ---------- Abstract ----------
 \begin{abstract}
-The intersection of financial markets and mathematical modeling has long fascinated both practitioners and academics.
-While algorithmic trading first sparked my interest in finance, it was the underlying question of how risk and price evolve
-that drew me toward stochastic calculus and derivative pricing. This study presents a reproducible computational baseline for
-pricing European options using the Black--Scholes model and compares theoretical values with real S\&P 500 (SPX) market data.
-We highlight model fit, limitations arising from the constant volatility assumption, and outline directions toward stochastic
-volatility models such as Heston.
+The intersection of financial markets and mathematical modeling has long fascinated both practitioners and academics. While algorithmic trading first sparked my interest in finance, it was the underlying question of how risk and price evolve that drew me toward stochastic calculus and derivative pricing. This study presents a reproducible computational baseline for pricing European options using the Black--Scholes model and compares theoretical values with real S\&P 500 (SPX) market data. 
+
+Empirical results reveal systematic volatility smiles and skews, highlighting structural limitations in the constant-volatility assumption. Motivated by these findings, this work serves as a foundation for ongoing research into stochastic volatility frameworks, including the Heston model, to better understand the dynamics of implied volatility surfaces.
 \end{abstract}
+
 
 \textbf{Keywords:} Black--Scholes, Stochastic Volatility, SPX Options, Greeks, Quantitative Finance
 
@@ -128,16 +126,12 @@ curvature (sensitivity of Delta) for short maturities.}
 
 \FloatBarrier % <-- Ensures all figures stay before next section
 
-% ---------- Discussion and Future Work ----------
-
 \section{Discussion and Future Work}
 
 \subsection{Interpretation of Results}
 The empirical results highlight systematic discrepancies between market prices and the Black--Scholes baseline, particularly across strikes surrounding the at--the--money region. These deviations are consistent with the well-documented \emph{volatility smile} and \emph{skew} phenomena, where implied volatilities vary by strike rather than remaining constant. In practice, out-of-the-money options often carry higher implied volatilities due to demand for tail-risk protection, while at-the-money options generally reflect more balanced beliefs about short-term uncertainty.
 
 The presence of persistent pricing errors indicates that the constant-volatility assumption of Black--Scholes cannot fully capture market dynamics. Although the model serves as an analytically elegant starting point, its single-parameter volatility framework leads to underestimation or overestimation of option values depending on moneyness. This reinforces the need for richer stochastic models capable of representing time-varying and state-dependent volatility structures.
-
-% ---------- Future Work ----------
 
 \subsection{Future Work: Heston Model}
 Future research will extend this analysis using stochastic volatility models. A prominent stochastic volatility framework is the Heston model~\cite{heston1993closed}, in which the variance follows a mean-reverting square-root process correlated with the asset price.
@@ -150,6 +144,33 @@ dv_t &= \kappa(\theta - v_t)\,dt + \xi \sqrt{v_t}\, dW_t^v,
 \end{equation}
 where $v_t$ denotes instantaneous variance, $\kappa$ is the rate of mean reversion, $\theta$ the long-run variance, and $\xi$ the volatility of variance. By allowing the volatility to evolve stochastically, the Heston model provides a more flexible framework to capture empirical features such as smile, skew, and term structure. Calibration and comparison against SPX market data will form the basis of future empirical work.
 
+\section{Open Research Questions}
+A natural question arising from this study is whether a single-factor stochastic model, such as Heston, is sufficient to capture the full structure of implied volatility surfaces observed in equity index options, or whether multi-factor or jump-diffusion models are required. Another unresolved challenge is the stability of calibrated parameters across different market regimes, particularly during periods of volatility shocks or extreme tail events. These questions lie at the intersection of mathematical finance and empirical modeling, and form the foundation of my intended doctoral research. Future work will also investigate the robustness of volatility models under high-frequency recalibration and explore numerical techniques for solving stochastic differential equations in calibration settings.
+
+
+\section{Ongoing Research: Extension to Stochastic Volatility Models}
+
+While the Black--Scholes framework provides an analytically elegant foundation for option pricing, its assumption of constant volatility limits its ability to capture empirically observed phenomena such as volatility smiles and skews. The pricing discrepancies identified in this study, particularly for out-of-the-money strikes, highlight the need for models that incorporate dynamic, state-dependent volatility. As a natural progression of this work, I am initiating an ongoing research extension into stochastic volatility models, with a focus on the Heston model.
+
+The Heston model introduces a stochastic process for variance, allowing volatility to fluctuate over time and mean-revert toward a long-run level. Its formulation is given by
+\begin{equation}
+\begin{aligned}
+dS_t &= \mu S_t\,dt + \sqrt{v_t}\, S_t\, dW_t^{S}, \\
+dv_t &= \kappa(\theta - v_t)\,dt + \xi \sqrt{v_t}\, dW_t^{v},
+\end{aligned}
+\end{equation}
+where $v_t$ denotes instantaneous variance, $\kappa$ the mean-reversion rate, $\theta$ the long-run variance, and $\xi$ the volatility of variance. The correlation between the Brownian motions $dW_t^{S}$ and $dW_t^{v}$ enables the model to replicate asymmetric volatility patterns observed in equity index options.
+
+The objective of this ongoing extension is to investigate whether stochastic volatility can more accurately reproduce implied volatility smiles compared to Black--Scholes. Initial efforts are directed toward calibrating the Heston parameters to a single maturity slice of SPX options, using least-squares fitting on implied volatilities across strikes. This calibration will enable direct comparison between market smiles and model-implied smiles, offering insight into the explanatory power of stochastic variance. The author maintains an online repository documenting the computational development of this extension, with the goal of advancing this work into a broader study on volatility dynamics and model robustness under varying market regimes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{heston_smile.png}
+\caption{Market implied volatility versus an illustrative Heston smile for the S\&P 500 (via SPY ETF). The stochastic volatility model reproduces skew more flexibly than Black--Scholes.}
+\label{fig:heston-smile}
+\end{figure}
+
+
 
 
 
@@ -160,7 +181,7 @@ This study implemented the Black--Scholes framework and applied it to real SPX o
 
 Looking ahead, models such as Heston offer a mathematically richer foundation by allowing volatility itself to vary over time and state. Incorporating such dynamics represents a natural progression of this work and aligns with my broader goal of contributing to financial modeling that is both mathematically rigorous and practically relevant. Ultimately, I aim to bridge mathematical finance and quantitative innovation in industry, building tools and insights that serve both research and real-world applications.
 
-% ---------- Acknowledgment ----------
+
 \section*{Acknowledgment}
 This work is part of my independent research initiative in computational finance, conducted in preparation for doctoral studies in Financial Mathematics.
 
